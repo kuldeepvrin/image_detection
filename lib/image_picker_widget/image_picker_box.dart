@@ -74,39 +74,43 @@ class _ImagePickerBoxState extends State<ImagePickerBox> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          GestureDetector(
-            onTap: _pickImage,
-            child: Container(
-              width: 200,
-              height: 200,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.blue, width: 2),
-                borderRadius: BorderRadius.circular(12),
+    return Scaffold(
+      appBar: AppBar(title: const Text("Gender Detection"), centerTitle: true),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: _pickImage,
+              child: Container(
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.blue, width: 2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child:
+                    _pickedImage != null
+                        ? ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.file(
+                            _pickedImage!,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: double.infinity,
+                          ),
+                        )
+                        : const Center(child: Text('Tap to pick image', style: TextStyle(color: Colors.grey))),
               ),
-              child:
-                  _pickedImage != null
-                      ? ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.file(
-                          _pickedImage!,
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          height: double.infinity,
-                        ),
-                      )
-                      : const Center(child: Text('Tap to pick image', style: TextStyle(color: Colors.grey))),
             ),
-          ),
-          const SizedBox(height: 16),
-          if (_isLoading)
-            const CircularProgressIndicator()
-          else if (_gender != null)
-            Text('Detected: $_gender', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          // debugPrint(_gender);
-        ],
+            const SizedBox(height: 16),
+            if (_isLoading)
+              const CircularProgressIndicator()
+            else if (_gender != null)
+              Text('Detected: $_gender', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            // debugPrint(_gender);
+          ],
+        ),
       ),
     );
   }
